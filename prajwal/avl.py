@@ -32,7 +32,6 @@ class AVLTree:
         else:
             return node
         
-        print(f"the value {value} has been inserted to the node {node} ")
         # updating the height & balance factor after insertion
         # max() - because the tallest is what determines the height of the node 
         node.height = 1 + max( self.getHeight(node.left) , self.getHeight(node.right))
