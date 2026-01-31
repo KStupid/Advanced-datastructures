@@ -7,44 +7,72 @@ class Node:
 
 class AVLTree:
     def __init__(self):
-        pass
+        self.root = None
+        print("a new tree created")
 
-    def insert(self, value):
-        if self.root is None:       # if the tree is just Initialized
+    def insert(self, value , node:Node=None , isFirstCall=False):
+        
+        if self.root is None:       # if the tree is just Initialized (No root node exist)
             self.root = Node(value)
+            return self.root
+        
+        if  node is None and not isFirstCall:                         # just a falg to indicate whether this is the first time calling the method
+            self.root = self.insert(value=value , node=self.root , isFirstCall=True )
+            return self.root
+        
+        if not node:
+            return Node(value=value)
+
+        if value < node.value:
+            node.left = self.insert(value=value , node=node.left , isFirstCall=True )
+        elif value > node.value:
+            node.right = self.insert(value=value , node=node.right   , isFirstCall=True)
         else:
-            # Needs to perform a recursive insertion strategy
-            pass
+            return node
+        
+        # updating the height & balance factor after insertion
+        # max() - because the tallest is what determines the height of the node 
+        node.height = 1 + max( self.getHeight(node.left) , self.getHeight(node.right))
+        balanceFactor = self.getBalanceStatus(node)
+
+        # Selecting which rotation to perform   
+        # if balanceFactor > 1:
+        #     # this means , the structure is a zig-zag (<)
+        #     thatVal = node.left
+        #     node.left = self.le
 
 
-# types of rotation :
-#  * Left-Left (LL) -> single Right Rotation
-#       z            y
-#      /            / \
-#     y         => x   z
-#    /
-#   x
-#  * Right-Right (RR) - Single Left rotation
-#   z                 y
-#    \               / \ 
-#     y         =>  z   x
-#       \
-#        x    
-#  * Left-Right (LR) -> Perform a single left rotation on the 2nd child -> then single right rotation 
-#       z                     z                 x
-#      /   leftRot(y)        /   rightRot(z)   / \
-#     y         =>          x       =>        y   z
-#       \                  /
-#         x               y
-#  * Right-Left (RL) -> Single rightRot(y) -> Single leftRot(z)
-#         z                z              x
-#          \                \            /  \
-#           y       =>       x       => z    y
-#          /                  \
-#         x                    y
 
-    def rightRot(self , z ):  # A single right rotation 
-        y = z.left
+    # types of rotation :
+    #  * Left-Left (LL) -> single Right Rotation
+    #       z            y
+    #      /            / \
+    #     y         => x   z
+    #    /
+    #   x
+    # * Right-Right (RR)  Single Left rotation
+    #   z                 y
+    #    \               / \ 
+    #     y         =>  z   x
+    #       \
+    #        x    
+
+    #  * Left-Right (LR) -> Perform a single left rotation on the 2nd child -> then single right rotation 
+    #       z                     z                 x
+    #      /   leftRot(y)        /   rightRot(z)   / \
+    #     y         =>          x       =>        y   z
+    #       \                  /
+    #         x               y
+    #  * Right-Left (RL) -> Single rightRot(y) -> Single leftRot(z)
+    #         z                z              x
+    #          \                \            /  \
+    #           y       =>       x       => z    y
+    #          /                  \
+    #         x                    y
+
+
+    def rightRot(self , z:Node ):  # A single right rotation 
+        y:Node = z.left
         t = y.right
 
         # the actual rotation
@@ -59,8 +87,32 @@ class AVLTree:
 
         return y
 
-    def leftRot(self ,  ): 
-        pass
+    def leftRot(self , z:Node ): 
+        y:Node = z.right
+        t = y.left
+
+        # the actual Rotation
+        y.left = z
+        z.left = t
+
+        # updating the height
+        z.height = 1 + max( self.getHeight(z.left) - self.getHeight(z.right)) 
+        y.height = 1 + max( self.getHeight(y.left) - self.getHeight(y.right)) 
     
-    def getHeight(self , x):
-        pass
+        return y
+    def getHeight(self , node:Node):
+        if not node:
+            return 0
+        else:
+            return node.height
+    
+    def getBalanceStatus(self , node:Node):
+        if not node:
+            return 0
+        balanceFactor = self.getHeight(node.left) - self.getHeight(node.right)
+        return balanceFactor
+    
+tree0 = AVLTree()
+tree0.insert(56 )
+tree0.insert(523 )
+tree0.insert(12 )
