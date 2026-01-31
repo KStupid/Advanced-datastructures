@@ -1,3 +1,5 @@
+import random
+
 class Node:
     def __init__(self, value):
         self.value = value
@@ -224,11 +226,14 @@ class AVLTree:
 
 tree0 = AVLTree()
 
-tree0.root = tree0.insert(12, tree0.root)
-tree0.root = tree0.insert(10, tree0.root)
-tree0.root = tree0.insert(56, tree0.root)
-tree0.root = tree0.insert(50, tree0.root)
-tree0.root = tree0.insert(122, tree0.root)
-tree0.root = tree0.insert(2, tree0.root)
+
+## Edit these variables:
+num_of_nodes = 16
+node_value_lower_limit = 0
+node_value_upper_limit = 500
+
+for i in range(num_of_nodes):
+    val = random.randint(node_value_lower_limit,node_value_upper_limit)
+    tree0.root = tree0.insert(val, tree0.root)
 
 tree0.printDiagram()
