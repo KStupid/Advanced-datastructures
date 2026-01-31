@@ -1,6 +1,5 @@
 class HashTable:
     def __init__(self, size):
-        empty lists (buckets)
         self.size = size
         self.table = [[] for _ in range(size)]
 
@@ -40,6 +39,6 @@ ht = HashTable(5)
 ht.insert("Apple", 10)
 ht.insert("Banana", 20)
 
-print("Apple:", ht.search("Apple"))      # Output: 10
+print("Apple:", ht.search("Apple"))
 ht.delete("Apple")
-print("Apple after delete:", ht.search("Apple"))  # Output: None
+print("Apple after delete:", ht.search("Apple"))
