@@ -21,13 +21,13 @@ class BloomFilter:
     def contains(self, item):
         for index in self.get_hashes(item):
             if self.bit_array[index] == 0:
-         return False   
-        return True         
+                return False
+        return True
 
 bf = BloomFilter(20, 3)
 
 bf.add("Cat")
 bf.add("Dog")
 
-print("Contains 'Cat':", bf.contains("Cat"))    
+print("Contains 'Cat':", bf.contains("Cat"))
 print("Contains 'Bird':", bf.contains("Bird"))
