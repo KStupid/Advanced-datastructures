@@ -22,5 +22,6 @@ class Solution:
         
         return max(maxStreak, streak)
 
-LeetCode = Solution()
-print(LeetCode.longestConsecutive( [0,3,7,2,5,8,4,6,0,1] ))
+foo = Solution()
+numList = [0,1,5,6,7,8,9,10,11,462,2673,247,475,6851,35,74]
+print(f"number of digits in the sequence : {foo.longestConsecutive( numList )}")
